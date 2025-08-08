@@ -10,14 +10,30 @@
 
 import dotenv from "dotenv";
 import express from "express";
-import notesRoutes from "./routes/noteRoutes.js";
+import notesRoutes from "./routes/notesRoutes.js";
+import connectDB from "./config/db.js";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+connectDB();
 app.use(express.json());
+
+/**
+ * @brief Middleware for logging incoming HTTP request.
+ * @details This middleware logs the timestamp, HTTP method, and  URL for every incoming request.
+ * @param {object} req - The Express request object.
+ * @param {object} res - The Express response object.
+ * @param {function} next - The next middleware function in the stack.
+ * It's useful for debugging and monitoring.
+ */
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()} ${req.method} ${req.originalUrl}]`);
+    next();
+});
+
 app.use("/api/notes", notesRoutes);
 
 /**

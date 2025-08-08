@@ -9,7 +9,7 @@
  * @see {@link ../app.js} for where this function is called.
  */
 
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
 /**
  * @brief Asynchronously connects to the MongoDB database.
@@ -20,7 +20,7 @@ import mongoose from "mongoose";
 const connectDB = async () => {
 	try {
 		const conn = await mongoose.connect(process.env.MONGO_URI, {
-			serverSelectionTimeoutMS: 5000,
+			serverSelectionTimeoutMS: 30000,
 			socketTimeoutMS: 45000
 		});
 		console.log(`Mongo DB connected: ${conn.connection.host} ✅`);
