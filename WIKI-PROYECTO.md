@@ -439,3 +439,259 @@ export const deleteNote = (req, res) => {
 ---
 
 ✅ Estos controladores ya están listos para conectar con una base de datos real (MongoDB + Mongoose), manteniendo la estructura asincrónica y segura.
+
+
+---
+
+## 📂 Base de Datos – Conexión con MongoDB
+
+### **Archivo:** `db.js`
+
+Este módulo se encarga de establecer la conexión entre el backend y **MongoDB Atlas** usando **Mongoose** versión `7.0.3`.
+
+---
+
+### 📌 **Descripción General**
+
+El archivo `db.js` contiene una función asíncrona `connectDB` que:
+
+* Obtiene la URI de MongoDB desde las **variables de entorno**.
+* Usa **Mongoose** para conectarse a la base de datos.
+* Configura **timeouts** para mejorar la fiabilidad de la conexión.
+* Incluye manejo de errores robusto, cerrando el servidor si la conexión falla.
+
+---
+
+### 🔧 **Detalles Técnicos**
+
+* **Dependencia usada:** `mongoose`
+* **Configuraciones clave:**
+
+  * `serverSelectionTimeoutMS: 5000` → Tiempo máximo para seleccionar un servidor MongoDB.
+  * `socketTimeoutMS: 45000` → Tiempo máximo que un socket puede permanecer inactivo.
+* **Variables de entorno necesarias:**
+
+  * `MONGO_URI` → Cadena de conexión de MongoDB Atlas.
+
+---
+
+### 📜 **Implementación**
+
+```javascript
+import mongoose from "mongoose";
+
+const connectDB = async () => {
+	try {
+		const conn = await mongoose.connect(process.env.MONGO_URI, {
+			serverSelectionTimeoutMS: 5000,
+			socketTimeoutMS: 45000
+		});
+		console.log(`Mongo DB connected: ${conn.connection.host} ✅`);
+	} catch (error) {
+		console.error(`Mongo DB connection error: ${error.message} ❌`);
+		process.exit(1);
+	}
+};
+
+export default connectDB;
+```
+
+---
+
+### 🚀 **Uso**
+
+En tu archivo `app.js` o `server.js`, debes importar y ejecutar la función `connectDB` antes de iniciar el servidor:
+
+```javascript
+import connectDB from './config/db.js';
+
+connectDB();
+```
+
+---
+
+### 📌 **Buenas Prácticas**
+
+* Nunca hardcodear la **URI** de MongoDB en el código; usar variables de entorno.
+* Configurar correctamente los timeouts para evitar bloqueos prolongados.
+* Usar logs claros (`✅` y `❌`) para identificar el estado de la conexión.
+
+---
+
+## 📄 Definir el Schema y Modelo en Mongoose
+
+### **📌 Archivo:** `models/Note.js`
+
+Este archivo define el **esquema** y el **modelo** de la colección `Note` en MongoDB usando **Mongoose**.
+Se establecen reglas de validación para los campos y se habilitan los *timestamps* para registrar automáticamente la fecha de creación y actualización de cada documento.
+
+---
+
+### **🛠 Implementación del Schema**
+
+```javascript
+import mongoose from "mongoose";
+
+const noteSchema = new mongoose.Schema(
+	{
+		title: {
+			type: String,
+			required: [true, "Title is required."],
+			trim: true,
+			minlength: [3, "Title must be at least 3 characters long."],
+			maxlength: [100, "Title cannot exceed 100 characters."]
+		},
+		content: {
+			type: String,
+			required: [true, "Content is required."],
+			trim: true
+		},
+	},
+	{
+		timestamps: true, // Añade createdAt y updatedAt automáticamente
+	}
+);
+
+const Note = mongoose.model("Note", noteSchema);
+
+export default Note;
+```
+
+---
+
+### **📖 Explicación paso a paso**
+
+#### **1️⃣ Creación del Schema**
+
+* Se usa `new mongoose.Schema()` para definir la estructura de los documentos de la colección.
+* **Campos definidos:**
+
+  * `title` → String obligatorio, con limpieza de espacios (`trim`), mínimo 3 y máximo 100 caracteres.
+  * `content` → String obligatorio, también con limpieza de espacios.
+
+#### **2️⃣ Validaciones**
+
+* Se incluyen mensajes personalizados en caso de que el valor no cumpla los requisitos.
+* Las validaciones evitan que se inserten datos incompletos o incorrectos.
+
+#### **3️⃣ Uso de timestamps**
+
+* `timestamps: true` añade automáticamente dos campos:
+
+  * `createdAt` → Fecha de creación.
+  * `updatedAt` → Fecha de última modificación.
+
+#### **4️⃣ Creación del Modelo**
+
+* `mongoose.model("Note", noteSchema)` crea un **modelo** que representa la colección `notes` en MongoDB.
+* Este modelo nos permite:
+
+  * Crear documentos.
+  * Consultar datos.
+  * Actualizar o eliminar documentos.
+
+---
+
+### **💡 Buenas prácticas**
+
+* **Organización**: Mantener los esquemas en la carpeta `models/` para una estructura clara.
+* **Validaciones desde el backend**: No confiar únicamente en la validación del frontend.
+* **Timestamps**: Útiles para auditoría y seguimiento de cambios.
+
+---
+
+### **🔗 Relación con otras partes del proyecto**
+
+* Este modelo es utilizado en los **controladores** para realizar operaciones CRUD sobre las notas.
+* Funciona en conjunto con la conexión establecida en `db.js` usando `connectDB()`.
+
+---
+
+# 📄 Definición de Schema y Modelo: `Note`
+
+## 📌 Descripción
+
+Este módulo define el **schema** y el **modelo Mongoose** para la colección `Note` en MongoDB.
+Incluye validaciones para los campos `title` y `content`, además de gestión automática de **timestamps** (`createdAt` y `updatedAt`).
+
+---
+
+## 📂 Ubicación del archivo
+
+```
+models/Note.js
+```
+
+---
+
+## ⚙️ Dependencias requeridas
+
+* **mongoose** (v7.0.3 o superior)
+
+Instalación:
+
+```bash
+npm install mongoose@7.0.3
+```
+
+---
+
+## 🛠 Estructura y Validaciones del Schema
+
+| Campo     | Tipo   | Requerido | Validaciones                                                                                |
+| --------- | ------ | --------- | ------------------------------------------------------------------------------------------- |
+| `title`   | String | ✅ Sí      | - Mínimo **3** caracteres<br>- Máximo **100** caracteres<br>- Eliminación de espacios extra |
+| `content` | String | ✅ Sí      | - Eliminación de espacios extra                                                             |
+
+> 💡 **timestamps:** Activados por configuración del schema, lo que genera automáticamente los campos `createdAt` y `updatedAt`.
+
+---
+
+## 🧩 Código de implementación
+
+```javascript
+import mongoose from "mongoose";
+
+const noteSchema = new mongoose.Schema(
+	{
+		title: {
+			type: String,
+			required: [true, "Title is required."],
+			trim: true,
+			minlength: [3, "Title must be at least 3 characters long."],
+			maxlength: [100, "Title cannot exceed 100 characters."]
+		},
+		content: {
+			type: String,
+			required: [true, "Content is required."],
+			trim: true
+		},
+	},
+	{
+		timestamps: true,
+	}
+);
+
+const Note = mongoose.model("Note", noteSchema);
+
+export default Note;
+```
+
+---
+
+## 🔍 Uso del modelo
+
+```javascript
+import Note from "./models/Note.js";
+
+// Crear una nueva nota
+const newNote = await Note.create({
+	title: "Mi primera nota",
+	content: "Este es el contenido de mi nota."
+});
+
+// Buscar todas las notas
+const notes = await Note.find();
+```
+
+---
