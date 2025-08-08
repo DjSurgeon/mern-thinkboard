@@ -118,4 +118,35 @@ Una Response (respuesta HTTP) es el mensaje que un servidor envía de vuelta a u
 - **Headers**: Metadatos sobre la respuesta, como el tipo de contenido o la fecha.
 - **Body**: El cuerpo de la respuesta, que contiene los datos solicitados (por ejemplo, un archivo HTML o un objeto JSON con los datos de un usuario).
 
+## MongoDB
 
+MongoDB es una base de datos NoSQL orientada a documentos. A diferencia de las bases de datos relacionales tradicionales, que almacenan datos en tablas, MongoDB guarda los datos en documentos flexibles, similares a JSON (BSON). Esta estructura hace que sea muy adecuada para aplicaciones que necesitan manejar datos no estructurados o que tienen requisitos de esquema cambiantes. Su flexibilidad, escalabilidad horizontal y alto rendimiento la convierten en una opción popular para el desarrollo de aplicaciones modernas.
+
+## MongoDB Atlas
+
+MongoDB Atlas es el servicio de base de datos en la nube de MongoDB. Es una solución de Database as a Service (DBaaS) que permite a los desarrolladores alojar sus bases de datos MongoDB de forma segura, escalable y gestionada. En lugar de configurar y mantener tu propia base de datos en un servidor, Atlas se encarga de todo el trabajo pesado: la configuración inicial, las copias de seguridad, las actualizaciones y la escalabilidad. Esto permite que te concentres en la lógica de tu aplicación en lugar de en la administración de la base de datos.
+
+## Mongoose
+
+Mongoose es una popular librería de ODM (Object Data Modeling) para MongoDB en el entorno de Node.js. Su propósito principal es facilitar la interacción con una base de datos MongoDB al proporcionar un esquema predefinido, lo que hace que los datos sean más estructurados y predecibles. Con Mongoose, puedes definir la estructura de tus modelos de datos, aplicar validaciones y usar métodos de consulta más sencillos y potentes para interactuar con tu base de datos desde tu aplicación Node.js.
+
+## Schema (Esquema de Mongoose)
+
+En Mongoose, un Schema (esquema) es la estructura que define la forma de un documento en una colección de MongoDB. Es como el plano para construir tus datos. El esquema te permite especificar los campos que un documento debe tener, los tipos de datos de esos campos (por ejemplo, String, Number, Date), las validaciones que deben cumplir y los valores predeterminados. Al usar un esquema, garantizas la consistencia y la integridad de los datos en tu base de datos, lo cual es fundamental para una aplicación robusta.
+
+## Model (Modelo de Mongoose)
+
+Un Model (modelo) en Mongoose es una representación de una colección de MongoDB basada en un Schema. El modelo es la herramienta que usas para interactuar con la base de datos: crear nuevos documentos, buscar, actualizar o eliminar datos. El modelo te da acceso a todos los métodos de consulta y a la lógica que definiste en el esquema. Se crea a partir de un Schema y se convierte en una clase constructora de documentos. Por ejemplo, si tienes un UserSchema, puedes crear un UserModel para trabajar con la colección de usuarios.
+
+## `connectDB` (Función de Conexión a la Base de Datos)
+
+connectDB es una función personalizada que se utiliza en aplicaciones Node.js para establecer la conexión entre el servidor Express y tu base de datos MongoDB (generalmente alojada en MongoDB Atlas). Esta función típicamente usa Mongoose para manejar la conexión, recibiendo como parámetro la URL de conexión de la base de datos. Su propósito es centralizar la lógica de conexión, asegurando que la aplicación se conecte correctamente a la base de datos al iniciar el servidor y manejando posibles errores de conexión de forma controlada.
+
+## `timestamps` (Opción de Mongoose)
+
+timestamps es una opción de esquema en Mongoose que, al activarse, añade automáticamente dos campos a cada documento: `createdAt` y `updatedAt`.
+
+- `createdAt`: Almacena la fecha y hora en que se creó el documento.
+- `updatedAt`: Almacena la fecha y hora en que se modificó por última vez el documento.
+
+Esta opción es extremadamente útil para el seguimiento de la actividad y el mantenimiento de los datos. Te permite saber cuándo se creó y cuándo se actualizó por última vez un registro sin tener que gestionar esos campos manualmente.

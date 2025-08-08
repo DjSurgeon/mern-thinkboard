@@ -12,14 +12,20 @@ import dotenv from "dotenv";
 import express from "express";
 import notesRoutes from "./routes/notesRoutes.js";
 import connectDB from "./config/db.js";
+import corsConfig from "./middleware/corsConfig.js";
+import { apiLimiter } from "./middleware/rateLimit.js";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-connectDB();
-app.use(express.json());
+await connectDB();
+
+app.use(apiLimiter);
+app.use(corsConfig);
+app.use(express.json({ limit: "10kb" }));
+app.use(express.urlencoded({ extended: true }));
 
 /**
  * @brief Middleware for logging incoming HTTP request.
