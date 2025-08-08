@@ -9,6 +9,9 @@
  */
 
 import cors from "cors";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 /**
  * @brief Configuration object for the CORS middleware.

@@ -14,6 +14,7 @@ import notesRoutes from "./routes/notesRoutes.js";
 import connectDB from "./config/db.js";
 import corsConfig from "./middleware/corsConfig.js";
 import { apiLimiter } from "./middleware/rateLimit.js";
+import { rateLimitRedis } from "./middleware/rateLimitRedis.js";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ const PORT = process.env.PORT || 3000;
 await connectDB();
 
 app.use(apiLimiter);
+app.use(rateLimitRedis);
 app.use(corsConfig);
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true }));
