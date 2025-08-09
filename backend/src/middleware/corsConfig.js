@@ -1,7 +1,7 @@
 /**
  * @file corsConfig.js
  * @brief This module defines and configures the CORS middleware for the Express application.
- * @details It sets specific options to control which origins, methods, and headers are allowed for cross-origin request, enhancing the application's security.
+ * @details It sets specific options to control which origins, methods, and headers are allowed for cross-origin requests, enhancing the application's security.
  * @author Sergio Jiménez de la Cruz
  * @date August 8, 2025
  * @version 1.0.0
@@ -21,7 +21,7 @@ const corsOptions = {
 	origin: `${process.env.LOCALHOST}:${process.env.PORT}`,
 	credentials: true,
 	methods: ['GET', 'POST', 'PUT', 'DELETE'],
-	allowHeaders: ['Content-Type', 'Authorization']
+	allowedHeaders: ['Content-Type', 'Authorization']
 }
 
 export default cors(corsOptions);

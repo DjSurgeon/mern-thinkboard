@@ -1,12 +1,12 @@
 /**
  * @file Note.js
  * @brief This file defines the Mongoose schema and model for a Note document.
- * @details The schema includes validation rules fot the title and content field and automatic timestamp management.
+ * @details The schema includes validation rules for the title and content field and automatic timestamp management.
  * @author Sergio Jiménez de la Cruz
  * @date August 7, 2025
  * @version 1.0.0
  * @license MIT
- * @see {@link ../controllers/notesController.js} foir where this model is used.
+ * @see {@link ../controllers/notesController.js} for where this model is used.
  */
 
 import mongoose from "mongoose";
@@ -14,7 +14,7 @@ import mongoose from "mongoose";
 /**
  * @brief Mongoose schema for the 'Note' collection
  * @details This schema defines structure and validation rules for a note.
- * It includes fields for the title, content, and Mongoose's built on timestamps.
+ * It includes fields for the title, content, and Mongoose's built-in timestamps.
  */
 const noteSchema = new mongoose.Schema(
 	{

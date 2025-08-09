@@ -1,7 +1,7 @@
 /**
  * @file app.js
  * @brief This is the main entry point for the Express application.
- * @details It initializes the Express server, connects to the database,, and configures all necessary middleware for security, logging,, and routing.
+ * @details It initializes the Express server, connects to the database, and configures all necessary middleware for security, logging, and routing.
  * @author Sergio Jiménez de la Cruz
  * @data August 6, 2025
  * @version 1.0.0
@@ -62,6 +62,6 @@ app.get("/", (req, res) => {
  * @details The server listens for incoming request on the specified port.
  */
 app.listen(PORT, () => {
-	console.log(`Server is runnning on port: ${PORT}`);
+	console.log(`Server is running on port: ${PORT}`);
 	console.log(`Access the API at http://localhost:${PORT}`);
 })

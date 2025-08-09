@@ -1,6 +1,6 @@
 /**
  * @file notesController.js
- * @brief This file contains the controller functions fot the notes API.
+ * @brief This file contains the controller functions for the notes API.
  * @details It handles all CRUD operations for notes, including validation and error handling.
  * @author Sergio Jiménez de la Cruz
  * @date August 6, 2025
@@ -12,7 +12,7 @@ import Note from "../models/Note.js";
 
 /**
  * @brief Handles a GET request to retrieve all notes.
- * @details Retrieves all notes from in-memory array and sends them as a JSON response.
+ * @details Retrieves all notes from MongoDB and sends them as a JSON response.
  * @param {object} req - The Express request object.
  * @param {object} res - The Express response object.
  * @returns {void} Sends a JSON response with all notes.
@@ -66,7 +66,7 @@ export const getNotesById = async (req, res) => {
 
 /**
  * @brief Handles a POST request to create a new note.
- * @details Validates the request body and creates a new note with a unique ID, adding it to the in--memory array.
+ * @details Validates the request body and creates a new note with a unique ID, adding it MongoDB.
  * @param {object} req - The Express request object.
  * @param {object} res - The Express response object.
  * @returns {void} Sends a 201 Created response with the new note.
@@ -77,7 +77,7 @@ export const createNote = async (req, res) => {
 		if (!title || ! content) {
 			return res.status(400).json({
 				error: "Bad request",
-				message: "Title and content are requires fileds."
+				message: "Title and content are required fields."
 			})
 		}
 		const newNote = await Note.create({title, content});
@@ -96,7 +96,7 @@ export const createNote = async (req, res) => {
 
 /**
  * @brief Handles a PUT/PATCH request update an existing note.
- * @details Find a note by ID and updates its title or content with the dara from the request body.
+ * @details Find a note by ID and updates its title or content with the data from the request body.
  * @param {object} req - The Express request object.
  * @param {object} res - The Express response object.
  * @returns {void} Sends a JSON response with the update note.
@@ -105,7 +105,7 @@ export const updateNote = async (req, res) => {
 	try {
 		const { id } = req.params;
 		const { title, content } = req.body;
-		const updateNote = await Note.findByIdAndUpdate(id, {title, content});
+		const updateNote = await Note.findByIdAndUpdate(id, {title, content}, {new: true});
 		if (!updateNote) {
 			return res.status(404).json({
 				error: "Not Found",
@@ -127,7 +127,7 @@ export const updateNote = async (req, res) => {
 
 /**
  * @brief Handles a DELETE request to remove a note.
- * @details Finds and remove a note by ID from the in-memory array.
+ * @details Finds and remove a note by ID from the database.
  * @param {object} req - The Express request object.
  * @param {object} res - The Express response object.
  * @returns {void} Sends a 204 No content response on success.

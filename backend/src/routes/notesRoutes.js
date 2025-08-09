@@ -1,12 +1,12 @@
 /**
  * @file notesRouter.js
  * @brief This file defines the API routes for handling note-related requests.
- * @details It serves as the routing layer, mapping HTTP request to the appropriate controller functions for CRUD operations.
+ * @details It serves as the routing layer, mapping HTTP requests to the appropriate controller functions for CRUD operations.
  * @author Sergio Jiménez de la Cruz
  * @date August 6, 2025
  * @version 1.0.0
  * @license MIT
- * @see {@link ../controller/notesController.js} for the busines logic associated with these routes.
+ * @see {@link ../controller/notesController.js} for the bussines logic associated with these routes.
  */
 
 import express from 'express';
@@ -55,7 +55,7 @@ router.put("/:id", updateNote);
 /**
  * @brief DELETE route to remove a note by ID.
  * @details Handles request to delete a specific note using its ID.
- * @note DELETE /:id
+ * @name DELETE /:id
  * @function
  */
 router.delete("/:id", deleteNote);

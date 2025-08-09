@@ -1,7 +1,7 @@
 /**
  * @file rateLimitRedis.js
  * @brief This module provides a distributed rate-limiting middleware using Upstash Redis.
- * @details It implements a fixed window rate-limiting strategy to protect API endpoints from excessive request, preventing abuse and ensuring stability.
+ * @details It implements a fixed window rate-limiting strategy to protect API endpoints from excessive requests, preventing abuse and ensuring stability.
  * @author Sergio Jiménez de la Cruz
  * @date August 9, 2025
  * @version 1.0.0
@@ -13,8 +13,8 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { redis } from "../config/upstash.js";
 
 /**
- * @brief Initializes a new distributed rate limiter using aa fixed window strategy.
- * @details This limiter allows 20 requests per minute (60 seconds) for each unique IP address.
+ * @brief Initializes a new distributed rate limiter using a fixed window strategy.
+ * @details This limiter allows 10 requests per minute (60 seconds) for each unique IP address.
  * It is backed by the Upstash Redis client for a robust and scalable solution.
  * @type {Ratelimit}
  */
@@ -38,7 +38,7 @@ export const rateLimitRedis = async (req, res, next) => {
 		if (!success) {
 			return res.status(429).json({
 				error: "Too Many Requests.",
-				message: "Rate limit exceeded. Please try agin later. ❌",
+				message: "Rate limit exceeded. Please try again later. ❌",
 				details: {
 					limit,
 					remaining,
