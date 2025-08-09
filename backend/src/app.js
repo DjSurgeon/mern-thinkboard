@@ -1,11 +1,12 @@
 /**
  * @file app.js
  * @brief This is the main entry point for the Express application.
- * @details It initializes the Express server and defines a basic root endpoint.
+ * @details It initializes the Express server, connects to the database,, and configures all necessary middleware for security, logging,, and routing.
  * @author Sergio Jiménez de la Cruz
  * @data August 6, 2025
  * @version 1.0.0
  * @license MIT
+ * @see {@link ./routes/notesRoutes.js} for the API's route definitions.
  */
 
 import dotenv from "dotenv";
@@ -23,8 +24,8 @@ const PORT = process.env.PORT || 3000;
 
 await connectDB();
 
-app.use(apiLimiter);
 app.use(rateLimitRedis);
+app.use(apiLimiter);
 app.use(corsConfig);
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true }));
