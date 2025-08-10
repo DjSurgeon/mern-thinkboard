@@ -7,15 +7,14 @@ import HomePage from "../pages/HomePage";
 import CreatePage from "../pages/CreatePage";
 import NoteDetailPage from "../pages/NoteDetailPage";
 import NotFoundPage from "../pages/NotFoundPage";
-import Layout from "../components/Layout";
 
 const Router = () => (
 	<BrowserRouter>
 		<Routes>
-			<Route path="/" element={<Layout> <HomePage /> </Layout>} />
-			<Route path="/create" element={<Layout> <CreatePage /> </Layout>} />
-			<Route path="/notes/:id" element={<Layout><NoteDetailPage /></Layout>} />
-			<Route path="/*" element={<Layout><NotFoundPage /></Layout>} />
+			<Route path="/" element={<HomePage />} />
+			<Route path="/create" element={<CreatePage />} />
+			<Route path="/notes/:id" element={<NoteDetailPage />} />
+			<Route path="/*" element={<NotFoundPage />} />
 		</Routes>
 	</BrowserRouter>
 );

@@ -18,7 +18,7 @@ dotenv.config();
  * @details This object defines the allowed origins, HTTP methods, and headers for cross-origin requests, ensuring secure communication between the front-end and back-end.
  */
 const corsOptions = {
-	origin: `${process.env.LOCALHOST}:${process.env.PORT}`,
+	origin: [`${process.env.LOCALHOST}:${process.env.PORT}`, `${process.env.LOCALHOST}:${process.env.VITE_PORT}`],
 	credentials: true,
 	methods: ['GET', 'POST', 'PUT', 'DELETE'],
 	allowedHeaders: ['Content-Type', 'Authorization']

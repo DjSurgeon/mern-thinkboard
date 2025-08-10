@@ -24,9 +24,9 @@ const PORT = process.env.PORT || 3000;
 
 await connectDB();
 
-app.use(rateLimitRedis);
-app.use(apiLimiter);
 app.use(corsConfig);
+//app.use(apiLimiter);
+//app.use(rateLimitRedis);
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true }));
 

@@ -8,11 +8,10 @@ import { Toaster } from 'react-hot-toast'
 
 const App: React.FC = () => {
 	return (
-		<>
-			{/* Aquí irá la Navbar / Layout cuando la añadamos */}
+		<div data-theme="dracula">
 			<Router />
 			<Toaster position="top-right" />
-		</>
+		</div>
 	)
 }
 
