@@ -20,7 +20,7 @@ import { redis } from "../config/upstash.js";
  */
 const rateLimit = new Ratelimit({
 	redis,
-	limiter: Ratelimit.fixedWindow(10, "60 s")
+	limiter: Ratelimit.fixedWindow(20, "60 s")
 });
 
 /**

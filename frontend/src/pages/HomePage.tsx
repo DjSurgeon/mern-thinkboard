@@ -1,49 +1,62 @@
 /**
- * pages/HomePage.tsx
+ * @file HomePage.tsx
+ * @brief This component renders the main homepage of the application, displaying a list of notes.
+ * @details It handles fetching notes from the API, managing loading states, and displaying a rate-limit warning or an empty state.
+ * @author Sergio Jiménez de la Cruz
+ * @date August 11, 2025
+ * @version 1.0.0
+ * @license MIT
  */
 
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import api from "../api/axios";
 import Navbar from "../components/Navbar";
 import Notecard from "../components/Notecard";
 import RateLimitedUI from "../components/RateLimitedUI";
 import type { Note } from "../types";
+import { fetchNotes, deleteNote, editNote } from "../utils/handleNotes";
 
+/**
+ * @brief The main page component that displays all notes.
+ * @details It fetches the notes from the backend on initial reder prtovides functionality to view, edit, and delete notes. It also handles various UI states such as loading and rate-limiting.
+ * @returns {JSX.Element} The homepage layout with notes or status messages.
+ */
 const HomePage = () => {
-	const [isRateLimited, setIsRateLimited] = useState(false);
+	const [isRateLimited, setIsRateLimited] = useState<boolean>(false);
 	const [notes, setNotes] = useState<Note[]>([]);
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState<boolean>(true);
 
 	useEffect(() => {
-		const fetchNotes = async () => {
-			try {
-				const res = await api.get('/');
-				setNotes(res.data.data);
-				setIsRateLimited(false);
-			} catch (error: unknown) {
-				console.error("Error fetching notes");
-				if (error.response?.status === 429) {
-					setIsRateLimited(true);
-				} else {
-					toast.error("Failed to load notes");
-				}
-			} finally {
-				setLoading(false);
-			}
-		};
-		fetchNotes();
+		fetchNotes(setIsRateLimited, setNotes, setLoading);
 	},[])
+	const handleDelete = async (id: string) => {
+		const success = await deleteNote(id);
+		if (success) {
+			setNotes(notes.filter(note => note._id !== id));
+		}
+	};
+	const handleEdit = async (id: string) => {
+		editNote(id);
+	};
 	return (
 		<div className="min-h-screen">
 		<Navbar />
 		{isRateLimited && <RateLimitedUI />}
 		<div className="max-w-7xl mx-auto p-4 mt-6">
-			{loading && <div className="text-center text-primary py-10">Loading Notes...</div>}
-			{notes.length > 0 && !isRateLimited && (
+			{loading && (
+				<div className="text-center text-primary py-10">Loading Notes...</div>)}
+			{!loading && !isRateLimited && notes.length === 0 && (
+				<div className="text-center text-base-content/70 py-10">
+					<p>No notes found. Create a new one!</p>
+				</div>
+			)}
+			{!loading && !isRateLimited && notes.length > 0 && (
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 					{notes.map((note) => (
-						<Notecard key={note._id} note={note} />
+						<Notecard 
+						key={note._id} 
+						note={note}
+						onDelete={handleDelete}
+						onEdit={handleEdit} />
 					))}
 				</div>
 			)}

@@ -28,6 +28,6 @@ export const apiLimiter = rateLimit({
 		status: 'fail',
 		statusCode: 429,
 		error: "Too Many Requests",
-		message: 'Rate limit exceeded. Please try again later.'
+		message: 'Rate limit exceeded. Please try again later. ❌'
 	},
 });
