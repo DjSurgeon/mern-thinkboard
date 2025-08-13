@@ -15,7 +15,7 @@
  * @param {string} dateString - The ISO 8601 date string to be formatted.
  * @returns {string} The formatted date string, or an empty string if the input is invalid.
  */
-export const formatDate = (dateString: string) => {
+export const formatDate = (dateString: string | undefined) => {
 	if (!dateString) {
 		return '';
 	}

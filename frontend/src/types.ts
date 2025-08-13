@@ -31,13 +31,13 @@ export interface Note {
  * @interface NotecardProps
  * @brief Defines the props for the Notecard component.
  * @property {Note} note -The note object to be displayed in the card.
- * @property {(id: string) => void} onDelete - A callback function to handle the delete action.
- * @property {(id: string) => void} onEdit - A callback function to handle the edit action.
+ * @property {(id: string) => void} onDelete - Optional callback function to handle the delete action.
+ * @property {(id: string) => void} onEdit - Optional callback function to handle the edit action.
  */
 export interface NotecardProps {
 	note: Note;
-	onDelete: (id: string) => void;
-	onEdit: (id: string) => void;
+	onDelete?: (id: string) => void;
+	onEdit?: (id: string) => void;
 }
 
 /**

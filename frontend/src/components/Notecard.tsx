@@ -9,7 +9,7 @@
  */
 
 import { Link } from "react-router-dom";
-import { PenSquareIcon, Trash2Icon } from "lucide-react";
+import { Trash2Icon } from "lucide-react";
 import type { NotecardProps } from "../types";
 import { formatDate } from "../utils/formatDate";
 
@@ -23,15 +23,10 @@ import { formatDate } from "../utils/formatDate";
 const Notecard = ({ 
 	note,
 	onDelete,
-	onEdit
 	}: NotecardProps) => {
 		const handleDelete = (e: React.MouseEvent) => {
 			e.preventDefault();
-			onDelete(note._id);
-		};
-		const handleEdit = (e: React.MouseEvent) => {
-			e.preventDefault();
-			onEdit?.(note._id);
+			onDelete?.(note._id);
 		};
 	return (
 		<>
@@ -48,13 +43,6 @@ const Notecard = ({
 						dateTime={note.createdAt}>
 						{formatDate(note.createdAt)}
 						</time>
-						<div className="flex gap-2">
-						<button
-							className="btn btn-ghost btn-xs text-info hover:text-info/80"
-							onClick={handleEdit}
-							aria-label={`Edit note titled: ${note.title}`}>
-							<PenSquareIcon className="size-4" />
-						</button>
 						<button
 							className="btn btn-ghost btn-xs text-error hover:text-error/80"
 							onClick={handleDelete}
@@ -63,7 +51,6 @@ const Notecard = ({
 						</button>
 					</div>
 				</div>
-			</div>
 		</Link>
 		</>
 	);

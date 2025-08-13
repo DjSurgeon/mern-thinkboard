@@ -22,9 +22,9 @@ import type { Note } from "../types"
  * @returns {Promise<void>} A promise that resolves when the operation is complete.
  */
 export const fetchNotes = async (
-	setIsRateLimited: (value: SetStateAction<boolean>) => void, 
-	setNotes: (value: SetStateAction<Note[]>) => void, 
-	setLoading: (value: SetStateAction<boolean>) => void
+	setNotes: (value: SetStateAction<Note[]>) => void,
+	setLoading: (value: SetStateAction<boolean>) => void,
+	setIsRateLimited: (value: SetStateAction<boolean>) => void
 	): Promise<void> => {
 	try {
 		const res = await api.get<{data: Note[]}>('/notes');
@@ -32,11 +32,37 @@ export const fetchNotes = async (
 		setIsRateLimited(false);
 	} catch (error: unknown) {
 		console.error("Error fetching notes:", error);
-		if (error.response?.status === 429) {
+		if (error?.response.status === 429) {
 			setIsRateLimited(true);
 		} else {
 			toast.error("Failed to load notes.");
 		}
+	} finally {
+		setLoading(false);
+	}
+};
+
+/**
+ * 
+ */
+export const fetchNote = async (
+	setNote: (value: SetStateAction<Note | null>) => void,
+	setLoading: (value: SetStateAction<boolean>) => void,
+	id?: string,
+) : Promise<void> => {
+	try {
+		if (!id) {
+			console.error("No id provided");
+			setNote(null);
+			return;
+		};
+		setLoading(true);
+		console.log("Fetching note with ID:", id);
+		const res = await api.get<{data: Note}>(`/notes/${id}`);
+		console.log("Datos recuperados: ", res.data.data);
+		setNote(res.data.data);
+	} catch (error: unknown) {
+		console.error("Error fetching notes:", error);
 	} finally {
 		setLoading(false);
 	}
@@ -48,7 +74,7 @@ export const fetchNotes = async (
  * @param {string} id - The ID of the note to delete.
  * @returns {Promise<boolean>} A promise that resolves to true if the note was deleted successfuly, otherwise false.
  */
-export const deleteNote = async (id: string): Promise<boolean> => {
+export const deleteNote = async (id: string | undefined): Promise<boolean> => {
 	const isConfirmed = window.confirm("Are you sure you want to delete this note?");
 	if (!isConfirmed) {
 		return false;
@@ -69,7 +95,13 @@ export const deleteNote = async (id: string): Promise<boolean> => {
  * @param {string} id - The ID of the note to edit.
  * @returns {Promise<void>}
  */
-export const editNote = async (id: string): Promise<void> => {
-	//TODO edition Page
-	console.log(`Editing note with ID: ${id}`);
+export const editNote = async (
+	id: string | undefined,
+	note?: Note,
+): Promise<void> => {
+	try {
+		await api.put(`notes/${id}`, note);
+	} catch (error) {
+		console.error("Error", error);
+	}
 };

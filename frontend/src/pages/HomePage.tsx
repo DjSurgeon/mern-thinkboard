@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Notecard from "../components/Notecard";
 import RateLimitedUI from "../components/RateLimitedUI";
+import NotesNotFound from "../components/NotesNotFound";
 import type { Note } from "../types";
 import { fetchNotes, deleteNote, editNote } from "../utils/handleNotes";
 
@@ -26,7 +27,7 @@ const HomePage = () => {
 	const [loading, setLoading] = useState<boolean>(true);
 
 	useEffect(() => {
-		fetchNotes(setIsRateLimited, setNotes, setLoading);
+		fetchNotes(setNotes, setLoading, setIsRateLimited);
 	},[])
 	const handleDelete = async (id: string) => {
 		const success = await deleteNote(id);
@@ -45,9 +46,7 @@ const HomePage = () => {
 			{loading && (
 				<div className="text-center text-primary py-10">Loading Notes...</div>)}
 			{!loading && !isRateLimited && notes.length === 0 && (
-				<div className="text-center text-base-content/70 py-10">
-					<p>No notes found. Create a new one!</p>
-				</div>
+				<NotesNotFound />
 			)}
 			{!loading && !isRateLimited && notes.length > 0 && (
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
