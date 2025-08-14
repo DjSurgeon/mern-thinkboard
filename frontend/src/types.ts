@@ -1,10 +1,10 @@
 /**
  * @file types.ts
  * @brief This file defines the TypeScript interface used throughout the aplication.
- * @details It provides type definitions for data structures line `Note` and for components props, ensuring dtrong typing and improving code quality.
+ * @details It provides type definitions for data structures line `Note` and for components props, ensuring strong typing and improving code quality.
  * @author Sergio Jiménez de la Cruz
- * @date August 11, 2025
- * @version 1.0.0
+ * @date August 13, 2025
+ * @version 1.0.1
  * @license MIT
  */
 
@@ -12,6 +12,7 @@
  * @interface Note
  * @brief Defines the structure of a Note object.
  * @details This interface represents a note document as stored in the database.
+ * The `_id` field is always present after creation.
  * The optional fields are typically managed by the database.
  * @property {string} _id - The unique identifier of the note.
  * @property {string} title - The title of the note.

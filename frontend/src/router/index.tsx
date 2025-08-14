@@ -1,13 +1,14 @@
 /**
  * @file router/index.tsx
- * @brief This module defines the main routing configurastion for the application.
- * @details It uses `react-router-dom` to map different URL path to their corresponding React components, including dynamic routes and a cath all route for handling 404 errors.
+ * @brief This module defines the main routing configuration for the application.
+ * @details It uses `react-router-dom` to map different URL paths to their corresponding React components, including dynamic routes and a catch all route for handling 404 errors.
  * @author Sergio Jiménez de la Cruz
- * @date August 10, 2025
- * @version 1.0.0
+ * @date August 13, 2025
+ * @version 1.0.1
  * @license MIT
  */
 
+import type { JSX } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import CreatePage from "../pages/CreatePage";
@@ -20,7 +21,7 @@ import NotFoundPage from "../pages/NotFoundPage";
  * The `<BrowserRouter>` provides the routing context, and `<Routes>` defines the mapping of URL paath to specific components.
  * @returns {JSX.Element} The configured router component.
  */
-const Router = () => {
+const Router = (): JSX.Element => {
 	return (
 		<BrowserRouter>
 			<Routes>

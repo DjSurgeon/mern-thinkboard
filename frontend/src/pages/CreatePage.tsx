@@ -28,7 +28,7 @@ const CreatePage = () => {
 		e.preventDefault();
 		if (!title.trim() || !content.trim()) {
 			toast.error("All fields are required")
-			return ;
+			return;
 		}
 		try {
 			setLoading(true);
@@ -60,38 +60,38 @@ const CreatePage = () => {
 										<span className="label-text">Title</span>
 									</label>
 									<input
-									id="title"
-									type="text"
-									placeholder="Note Title"
-									className="input input-bordered"
-									value={title}
-									onChange={(e) => setTitle(e.target.value)}
-									required/>
+										id="title"
+										type="text"
+										placeholder="Note Title"
+										className="input input-bordered"
+										value={title}
+										onChange={(e) => setTitle(e.target.value)}
+										required />
 								</div>
 								<div className="form-control mb-4">
 									<label htmlFor="content" className="label">
 										<span className="label-text">Content</span>
 									</label>
 									<textarea
-									id="content"
-									placeholder="Write your note here..."
-									className="textarea textarea-bordered h-32"
-									value={content}
-									onChange={(e) => setContent(e.target.value)}
-									required/>
+										id="content"
+										placeholder="Write your note here..."
+										className="textarea textarea-bordered h-32"
+										value={content}
+										onChange={(e) => setContent(e.target.value)}
+										required />
 								</div>
 								<div className="card-actions justify-end">
-									<button type="submit" 
-									className="btn btn-primary" 
-									disabled={loading} 
-									aria-busy={loading}>{loading ? "Creating..." : "Create Note"}</button>
+									<button type="submit"
+										className="btn btn-primary"
+										disabled={loading}
+										aria-busy={loading}>{loading ? "Creating..." : "Create Note"}</button>
 								</div>
 							</form>
 						</div>
 					</div>
 					<Link to={"/"} className="btn btn-ghost mb-6">
-					<ArrowLeftIcon className="size-4"/>
-					Back to Notes
+						<ArrowLeftIcon className="size-4" />
+						Back to Notes
 					</Link>
 				</div>
 			</div>

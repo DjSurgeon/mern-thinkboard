@@ -1,13 +1,14 @@
 /**
  * @file App.tsx
  * @brief This is the main application component that serves as the root of the component tree.
- * @details It configuresthe application's global layout, theme, router and toast notifications.
+ * @details It configures the application's global layout, theme, router and toast notifications.
  * @author Sergio Jiménez de la Cruz
- * @date August 9, 2025
- * @version 1.0.0
+ * @date August 13, 2025
+ * @version 1.0.1
  * @license MIT
  */
 
+import type { JSX } from 'react';
 import { Toaster } from 'react-hot-toast'
 import Router from './router'
 
@@ -17,7 +18,7 @@ import Router from './router'
  * The theme is set via a `data-theme` attribute, which can be dynamically changed.
  * @returns {JSX.Element} The main application layout.
  */
-const App = () => {
+const App = (): JSX.Element => {
 	const theme = "dracula";
 
 	return (

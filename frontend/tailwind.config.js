@@ -12,6 +12,6 @@ export default {
   },
   plugins: [daisyui],
   daisyui: {
-    themes:["dark", "cyberpunk", "dracula", "light", "dark"]
+    themes:["dark", "cyberpunk", "dracula", "light"]
   }
 }

@@ -3,8 +3,8 @@
  * @brief This is the main entry point of the React application.
  * @details It renders the root component (`<App />`) into the DOM, enabling strict mode for better error cheking and future-proofing.
  * @author Sergio Jiménez de la Cruz
- * @date August 9, 2025
- * @version 1.0.0
+ * @date August 13, 2025
+ * @version 1.0.1
  * @license MIT
  */
 import { StrictMode } from 'react'
@@ -26,5 +26,5 @@ if (!rootElement) {
 createRoot(rootElement).render(
 	<StrictMode>
 		<App />
-	</StrictMode>,
+	</StrictMode>
 );
